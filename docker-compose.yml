@@ -1,0 +1,10 @@
+services:
+  bot-confeitaria:
+    build: .
+    container_name: bot-confeitaria
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./src/data:/app/src/data
+    command: node src/index.js
