@@ -10,8 +10,8 @@ async function gerarResposta(mensagemCliente) {
         const response = await result.response;
         return response.text();
     } catch (error) {
-        console.error("Erro na comunicação com a API:", error);
-        return "No momento, o sistema encontra-se indisponível. Tente novamente em instantes.";
+        console.error("Erro na comunicação com a API do Gemini:", error);
+        return "Desculpe, ocorreu uma falha na nossa comunicação interna. Tente novamente em instantes!";
     }
 }
 

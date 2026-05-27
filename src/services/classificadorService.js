@@ -6,9 +6,10 @@ const classificadorModel = genAI.getGenerativeModel({
     systemInstruction: `
 Você é um classificador de intenções estrito. 
 Analise a mensagem do usuário e retorne APENAS uma das seguintes palavras-chave, sem formatação extra: 
-SAUDACAO, PRODUTO, OUTRO. 
-Retorne 'SAUDACAO' para cumprimentos. 
+SOCIAL, PRODUTO, INSTITUCIONAL, OUTRO. 
+Retorne 'SOCIAL' para cumprimentos, saudações, despedidas, agradecimentos e trivialidades sociais.
 Retorne 'PRODUTO' para dúvidas sobre o cardápio, preços, disponibilidade ou intenção de compra. 
+Retorne 'INSTITUCIONAL' para perguntas sobre o estabelecimento, como endereço, localização, horário de funcionamento, telefone ou formas de contato.
 Retorne 'OUTRO' para qualquer assunto não relacionado ao contexto de uma confeitaria.`,
     generationConfig: {
         temperature: 0.0

@@ -2,12 +2,17 @@ const readline = require('readline/promises');
 const { stdin: input, stdout: output } = require('process');
 const { gerarResposta } = require('./services/geminiService');
 const { classificarIntencao } = require('./services/classificadorService');
+const { inicializarBaseDeConhecimento, consultarProduto } = require('./services/ragService');
+const { consultarDadosInstitucionais } = require('./services/estabelecimentoService');
 
 const rl = readline.createInterface({ input, output });
 
 async function iniciarChat() {
-    console.log("Sistema de Atendimento Iniciado (Modo Console).");
-    console.log("Digite 'sair' para encerrar o chat.\n");
+    console.log("Iniciando Sistema de Atendimento (Modo Console)...");
+    
+    await inicializarBaseDeConhecimento();
+    
+    console.log("Sistema pronto. Digite 'sair' para encerrar o chat.\n");
 
     let ativo = true;
 
@@ -21,21 +26,21 @@ async function iniciarChat() {
             break;
         }
 
-        console.log("Analisando intenção da mensagem...");
         const intencao = await classificarIntencao(mensagem);
-        console.log(`[Log do Sistema - Intenção detectada: ${intencao}]`);
-
+        
         let respostaFinal = "";
 
-        if (intencao === "SAUDACAO") {
+        if (intencao === "SOCIAL") {
             respostaFinal = await gerarResposta(mensagem);
         } 
         else if (intencao === "PRODUTO") {
-            // Este bloco será substituído futuramente pela lógica de RAG (Embeddings)
-            respostaFinal = "[Módulo RAG] Compreendi que você deseja informações sobre um produto. O sistema realizará a busca no cardápio em breve.";
+            respostaFinal = await consultarProduto(mensagem);
         } 
+        else if (intencao === "INSTITUCIONAL") {
+            respostaFinal = await consultarDadosInstitucionais(mensagem);
+        }
         else {
-            respostaFinal = "Desculpe, sou um assistente focado no atendimento da confeitaria. Como posso ajudar com nosso cardápio ou pedidos hoje?";
+            respostaFinal = "Sou o assistente da confeitaria. Como posso auxiliar com pedidos ou informações do nosso cardápio hoje?";
         }
         
         console.log(`\nAssistente: ${respostaFinal}\n`);
