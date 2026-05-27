@@ -3,8 +3,6 @@ const { calcularSimilaridadeCossenos } = require('../utils/matematica');
 const { listarProdutos, listarVetores, salvarVetores } = require('../repositories/produtoRepository');
 const { gerarResposta } = require('./geminiService');
 
-const model = require('../config/gemini');
-
 let baseDeConhecimento = [];
 
 async function inicializarBaseDeConhecimento() {
@@ -43,7 +41,7 @@ async function inicializarBaseDeConhecimento() {
     console.log("[Inicialização] Arquitetura de base de conhecimento carregada com sucesso.");
 }
 
-async function consultarProduto(mensagemCliente) {
+async function consultarProduto(userId, mensagemCliente) {
     if (baseDeConhecimento.length === 0) {
         return "O sistema ainda está carregando o cardápio. Por favor, aguarde um instante.";
     }
@@ -81,7 +79,7 @@ async function consultarProduto(mensagemCliente) {
         [Mensagem do Cliente]: "${mensagemCliente}"
     `;
 
-   return await gerarResposta(promptRAG)
+   return await gerarResposta(userId, promptRAG);
 }
 
 module.exports = { inicializarBaseDeConhecimento, consultarProduto };

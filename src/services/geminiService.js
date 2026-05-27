@@ -1,12 +1,18 @@
 const model = require('../config/gemini');
 
-const chat = model.startChat({
-    history: []
-});
+const sessoesChat = new Map();
 
-async function gerarResposta(mensagemCliente) {
+function obterSessaoChat(userId) {
+    if (!sessoesChat.has(userId)) {
+        sessoesChat.set(userId, model.startChat({ history: [] }));
+    }
+    return sessoesChat.get(userId);
+}
+
+async function gerarResposta(userId, prompt) {
     try {
-        const result = await chat.sendMessage(mensagemCliente);
+        const chat = obterSessaoChat(userId);
+        const result = await chat.sendMessage(prompt);
         const response = await result.response;
         return response.text();
     } catch (error) {

@@ -1,7 +1,7 @@
 const { obterDadosEstabelecimento } = require('../repositories/estabelecimentoRepository');
 const { gerarResposta } = require('./geminiService');
 
-async function consultarDadosInstitucionais(mensagemCliente) {
+async function consultarDadosInstitucionais(userId, mensagemCliente) {
     const dados = await obterDadosEstabelecimento();
     
     if (!dados) {
@@ -20,7 +20,7 @@ async function consultarDadosInstitucionais(mensagemCliente) {
         [Mensagem do Cliente]: "${mensagemCliente}"
     `;
 
-    return await gerarResposta(promptInstitucional);
+    return await gerarResposta(userId, promptInstitucional);
 }
 
 module.exports = { consultarDadosInstitucionais };
