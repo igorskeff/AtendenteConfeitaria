@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "nome": "Bolo de Chocolate",
+    "descricao": "Bolo com massa 100% cacau e cobertura tradicional de brigadeiro.",
+    "preco": 45.00,
+    "categoria": "bolos",
+    "disponibilidade": true
+  },
+  {
+    "id": 2,
+    "nome": "Torta de Limão",
+    "descricao": "Torta com massa de biscoito, recheio de limão siciliano e merengue.",
+    "preco": 55.00,
+    "categoria": "tortas",
+    "disponibilidade": true
+  },
+  {
+    "id": 3,
+    "nome": "Pão de Queijo Tradicional",
+    "descricao": "Porção com 10 unidades de pão de queijo assados na hora.",
+    "preco": 12.00,
+    "categoria": "salgados",
+    "disponibilidade": true
+  }
+]
