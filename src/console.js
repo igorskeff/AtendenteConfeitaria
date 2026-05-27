@@ -1,4 +1,5 @@
 const readline = require('readline');
+const { gerarResposta } = require('./services/geminiService');
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -15,7 +16,11 @@ function iniciarChat() {
             return;
         }
 
-        console.log(`Bot: Você disse "${mensagem}".`);
+        console.log("Bot: (Pensando...)");
+        
+        const respostaIA = await gerarResposta(mensagem);
+        
+        console.log(`\nBot: ${respostaIA}\n`);
 
         iniciarChat();
     });
