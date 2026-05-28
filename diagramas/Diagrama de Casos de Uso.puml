@@ -1,0 +1,20 @@
+@startuml
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Cliente" as cliente
+
+package "Sistema Bot Confeitaria" {
+usecase "Enviar Mensagem Inicial/Saudação" as UC1
+usecase "Consultar Opções do Cardápio" as UC2
+usecase "Consultar Endereço e Horários" as UC3
+usecase "Receber Link de Compra" as UC4
+}
+
+cliente --> UC1
+cliente --> UC2
+cliente --> UC3
+cliente --> UC4
+
+@enduml

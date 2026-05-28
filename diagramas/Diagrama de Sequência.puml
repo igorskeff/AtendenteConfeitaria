@@ -1,0 +1,37 @@
+@startuml
+autonumber
+skinparam maxMessageSize 150
+
+actor Cliente
+participant "API Telegram" as Telegram
+participant "Servidor (Node.js)" as Servidor
+participant "Controlador" as Controller
+participant "LLM" as Engine
+
+Cliente -> Telegram: Envia mensagens fragmentadas
+activate Telegram
+
+Telegram -> Servidor: Evento webhook/polling
+activate Servidor
+Telegram --> Cliente: Status "Digitando..."
+deactivate Telegram
+
+... Passagem de 2 segundos (Mecanismo de Debounce acumula mensagens) ...
+
+Servidor -> Controller: processarMensagem(userId, textoUnificado)
+activate Controller
+
+Controller -> Engine: rotearEProcessar(texto)
+activate Engine
+Engine --> Controller: Retorna payload final
+deactivate Engine
+
+Controller --> Servidor: Resposta formatada
+deactivate Controller
+
+Servidor -> Telegram: ctx.reply(texto, HTML)
+activate Telegram
+Telegram -> Cliente: Exibe mensagem na tela
+deactivate Telegram
+deactivate Servidor
+@enduml

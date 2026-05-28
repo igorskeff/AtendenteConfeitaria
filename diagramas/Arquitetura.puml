@@ -1,0 +1,22 @@
+@startuml
+skinparam componentStyle rectangle
+
+node "Dispositivo do Usuário" {
+  component "App Telegram" as App
+}
+
+node "Servidor Cloud (AWS EC2)" {
+  component "Container Docker" {
+    component "Bot Confeitaria (Node.js)" as Bot
+    component "Base Vetorial Local" as Dados
+  }
+}
+
+node "Google Cloud" {
+  component "Gemini API" as LLM
+}
+
+App <--> Bot : API REST (HTTPS / Long Polling)
+Bot <--> Dados : I/O de Arquivos
+Bot <--> LLM : API REST (HTTPS)
+@enduml
